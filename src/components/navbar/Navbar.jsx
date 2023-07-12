@@ -40,8 +40,7 @@ const Navbar = () => {
   return (
     <div className={styles.container}>
       <Link href="/" className={styles.logo}>
-        {" "}
-        jenlog{" "}
+        jenlog
       </Link>
       <div className={styles.links}>
         {links.map((link) => (
