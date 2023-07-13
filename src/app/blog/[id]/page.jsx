@@ -1,21 +1,33 @@
 import React from "react";
 import styles from "./page.module.css";
 import Image from "next/image";
+import {notFound} from "next/navigation";
 
-const BlogPost = () => {
+
+async function getData(id) {
+  const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, { 
+    // next: { revalidate: 10 }  // revalidate everytime 10s (cache lifetime of a resource is 10s)
+    next: { cache: 'no-store'  } 
+  });
+  if (!res.ok) {
+    return notFound();
+    // throw new Error("Failed to fetch data");
+  }
+
+  return (
+  res.json());
+}
+
+const BlogPost =  async ({params}) => {
+  // console.log(params);
+  const data = await getData(params.id);
   return (
     <div className={styles.container}>
       <div className={styles.top}>
         <div className={styles.info}>
-          <h1 className={styles.title}>title</h1>
+          <h1 className={styles.title}>{data.title}</h1>
           <p className={styles.desc}>
-            He was an expert but not in a discipline that anyone could fully
-            appreciate. He knew how to hold the cone just right so that the soft
-            server ice-cream fell into it at the precise angle to form a perfect
-            cone each and every time. It had taken years to perfect and he could
-            now do it without even putting any thought behind it. Nobody seemed
-            to fully understand the beauty of this accomplishment except for the
-            new worker who watched in amazement.
+          desc
           </p>
           <div className={styles.author}>
             <Image
@@ -38,7 +50,9 @@ const BlogPost = () => {
         </div>
       </div>
       <div className={styles.content}>
-        <p className={styles.text}>He was an expert but not in a discipline that anyone could fully appreciate. He knew how to hold the cone just right so that the soft server ice-cream fell into it at the precise angle to form a perfect cone each and every time. It had taken years to perfect and he could now do it without even putting any thought behind it. Nobody seemed to fully understand the beauty of this accomplishment except for the new worker who watched in amazement. He was an expert but not in a discipline that anyone could fully appreciate. He knew how to hold the cone just right so that the soft server ice-cream fell into it at the precise angle to form a perfect cone each and every time. It had taken years to perfect and he could now do it without even putting any thought behind it. Nobody seemed to fully understand the beauty of this accomplishment except for the new worker who watched in amazement.</p>
+        <p className={styles.text}>
+        {data.body}
+        </p>
       </div>
     </div>
   );
