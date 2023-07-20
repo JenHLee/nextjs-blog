@@ -16,6 +16,15 @@ async function getData(id) {
   return res.json();
 }
 
+// or Dynamic metadata
+export async function generateMetadata({ params }) {
+  const post = await getData(params.id)
+  return {
+    title: post.title,
+    description: post.description,
+  }
+}
+
 const BlogPost = async ({ params }) => {
   // console.log(params);
   const data = await getData(params.id);
