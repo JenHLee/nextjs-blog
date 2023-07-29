@@ -31,7 +31,7 @@ const Dashboard = () => {
   // // []안의 값이 바뀔때만 useEffect가 실행되는 것인데 이것을 넣지 않으면 컴포넌트가 실행될때마다 실행되서 무한 루프에 빠짐
 
   const session = useSession();
-  // console.log(session);
+  console.log(session);
   // fetch data in client side
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
   const { data, error, isLoading } = useSWR(
