@@ -11,6 +11,7 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(e.target[0]);
     const name = e.target[0].value;
     const email = e.target[1].value;
     const password = e.target[2].value;
