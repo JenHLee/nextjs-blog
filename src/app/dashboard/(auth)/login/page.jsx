@@ -1,15 +1,41 @@
-"use client"
+"use client";
 
-import React from 'react'
-import styles from './page.module.css'
+import React from "react";
+import styles from "./page.module.css";
 import { signIn } from "next-auth/react";
 
 const Login = () => {
+  const handleSubmit = async (e) => {
+    console.log(e);
+    e.preventDefault();
+    const email = e.target[0].value;
+    const password = e.target[1].value;
+
+    signIn("credentials", {email,password});
+  
+  };
+
   return (
     <div className={styles.container}>
-      <button onClick={()=> signIn("google")}>Login with google</button>
+      <form onSubmit={handleSubmit} className={styles.form}>
+        <input
+          type="text"
+          placeholder="Email"
+          required
+          className={styles.input}
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          required
+          className={styles.input}
+        />
+        <button className={styles.button}>Login</button>
+        {/* {error && "Something went wrong!"} */}
+      </form>
+      <button onClick={() => signIn("google")}>Login with google</button>
     </div>
-  )
-}
+  );
+};
 
 export default Login;

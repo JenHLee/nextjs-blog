@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./page.module.css";
 import useSWR from "swr";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 const Dashboard = () => {
   // const [data, setData] = useState([]);
   // const [err, setErr] = useState(false);
@@ -31,6 +32,9 @@ const Dashboard = () => {
   // // []안의 값이 바뀔때만 useEffect가 실행되는 것인데 이것을 넣지 않으면 컴포넌트가 실행될때마다 실행되서 무한 루프에 빠짐
 
   const session = useSession();
+
+  const router = useRouter();
+
   console.log(session);
   // fetch data in client side
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
@@ -38,7 +42,19 @@ const Dashboard = () => {
     "https://jsonplaceholder.typicode.com/posts",
     fetcher
   );
-  console.log(data); 
+
+  if (session.status === "loading") {
+    return <p>Loading...</p>;
+  }
+
+  if (session.status === "unauthenticated") {
+    router?.push("/dashboard/login")
+  }
+
+  if (session.status === "authenticated") {
+    return <div className={styles.container}>Dashboard</div>
+  }
+  // console.log(data);
 
   return <div>Dashboard</div>;
 };
