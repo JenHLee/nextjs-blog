@@ -6,7 +6,6 @@ import { signIn } from "next-auth/react";
 
 const Login = () => {
   const handleSubmit = async (e) => {
-    console.log(e);
     e.preventDefault();
     const email = e.target[0].value;
     const password = e.target[1].value;
