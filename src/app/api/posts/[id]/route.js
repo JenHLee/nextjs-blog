@@ -11,10 +11,7 @@ export const GET = async (request, {params}) => {
     await connect();
     const post = await Post.findById(id);
     return new NextResponse(JSON.stringify(post), {status:200});
-
   }catch(err){
       return new NextResponse("Database Error", {status:500});
-
   }
-  
 };
